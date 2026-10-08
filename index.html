@@ -8,21 +8,30 @@
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000">
 
   <title>Theia: you are your key</title>
-  <meta name="description" content="Share one service on your machine with one person until a date you pick, and take it back. No account for either of you.">
+  <meta name="description" content="Theia makes your identity a key you hold: reach your machines by it, give one service to one person until a date, and take it back, with no account anywhere.">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Theia">
-  <meta property="og:description" content="Share one service on your machine with one person until a date you pick, and take it back. No account for either of you.">
+  <meta property="og:title" content="Theia: you are your key">
+  <meta property="og:description" content="Theia makes your identity a key you hold: reach your machines by it, give one service to one person until a date, and take it back, with no account anywhere.">
+  <meta property="og:image" content="https://theia-hq.github.io/social-card.png">
+  <meta property="og:image:width" content="1280">
+  <meta property="og:image:height" content="640">
+  <meta property="og:image:alt" content="The Theia mark and name">
+  <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
+  <link rel="preload" href="assets/fonts/roboto-slab.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<a class="skip" href="#main">Skip to content</a>
+
 <header class="site-header">
-  <div class="wrap site-header__inner">
-    <a class="brand" href="./">
+  <div class="container site-header__inner">
+    <a class="brand" href="./" aria-label="Theia home">
       <picture>
         <source srcset="assets/logo-white.svg" media="(prefers-color-scheme: dark)">
         <img src="assets/logo.svg" alt="Theia" width="895" height="205">
@@ -30,202 +39,463 @@
     </a>
     <nav aria-label="Primary">
       <ul class="nav">
+        <li><a href="#vision">Vision</a></li>
+        <li><a href="#today">Today</a></li>
+        <li><a href="#libraries">Libraries</a></li>
         <li><a href="#install">Install</a></li>
-        <li><a href="https://github.com/theia-hq/swoosh/blob/main/docs/getting-started.md">Docs</a></li>
-        <li><a href="https://github.com/theia-hq">GitHub</a></li>
+        <li><a class="nav__gh" href="https://github.com/theia-hq">GitHub</a></li>
       </ul>
     </nav>
   </div>
 </header>
 
-<main>
+<main id="main">
 
+  <!-- Hero -->
   <section class="hero" aria-labelledby="hero-title">
-    <div class="wrap">
-      <h1 id="hero-title">You are your key.</h1>
-      <p class="lede">No account for you or for them. Let a friend into the photo library on your NAS for a week; take it back sooner, and they cannot connect again.</p>
-      <p class="actions">
-        <a class="button" href="#install">Install</a>
-        <a class="button button--quiet" href="https://github.com/theia-hq/swoosh/blob/main/docs/getting-started.md">Docs</a>
-      </p>
+    <div class="container hero__inner">
+      <div class="hero__text">
+        <h1 id="hero-title">You are your key.</h1>
+        <p class="hero__lede">Your identity is a key you hold, not an account someone can close. Reach your machines by it, give one service to one person, and take it back.</p>
+        <p class="hero__actions">
+          <a class="button" href="#install">Install</a>
+          <a class="button button--quiet" href="#vision">Read the vision</a>
+        </p>
+      </div>
+      <svg class="hero__orbit" viewBox="0 0 480 480" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1"><rect x="192" y="192" width="96" height="96" rx="15.36" transform="rotate(45 240 240)" opacity="0.55"/><rect x="166" y="166" width="148" height="148" rx="23.68" transform="rotate(45 240 240)" opacity="0.38"/><rect x="140" y="140" width="200" height="200" rx="32" transform="rotate(45 240 240)" opacity="0.26"/><rect x="114" y="114" width="252" height="252" rx="40.32" transform="rotate(45 240 240)" opacity="0.17" stroke-dasharray="3 5"/><rect x="88" y="88" width="304" height="304" rx="48.64" transform="rotate(45 240 240)" opacity="0.1" stroke-dasharray="3 5"/></g><g transform="translate(212 212) scale(0.23932)"><path fill="currentColor" d="M220.292 83.9088H220.291C224.65 88.2443 228.107 93.4008 230.46 99.0808C232.812 104.76 234.016 110.85 234 116.997L233.988 118.148C233.862 123.905 232.667 129.593 230.462 134.919C228.109 140.6 224.651 145.757 220.291 150.093L220.292 150.094L150.094 220.293L150.095 220.294C145.759 224.654 140.601 228.11 134.921 230.463C129.241 232.816 123.15 234.018 117.002 234.002L117.003 234.003L117.001 234.002L117 234.003V234.002C110.853 234.017 104.764 232.814 99.0847 230.461C93.4051 228.107 88.248 224.651 83.9127 220.292L40.8977 177.285H47.8617L87.3912 216.81L87.3922 216.811C91.2714 220.711 95.8855 223.803 100.967 225.908C106.05 228.013 111.499 229.089 117 229.074H117.003C122.504 229.09 127.954 228.015 133.037 225.91C138.12 223.805 142.735 220.712 146.614 216.811L146.615 216.81L216.807 146.615L216.808 146.614C220.709 142.735 223.801 138.12 225.906 133.037C228.011 127.954 229.086 122.504 229.07 117.003V117C229.085 111.499 228.01 106.05 225.905 100.967C223.8 95.8855 220.708 91.2713 216.808 87.3922L216.807 87.3912L192.964 63.5454L194.784 58.4008L220.292 83.9088ZM117.214 11.7804C121.815 11.7676 126.373 12.6678 130.624 14.4278C134.875 16.188 138.736 18.7737 141.981 22.0353L176.671 56.723H164.513L164.395 57.0561L122.124 176.619L121.889 177.285H152.752L152.87 176.952L190.491 70.5415L212.186 92.236C215.448 95.4812 218.034 99.3415 219.794 103.592C221.554 107.843 222.455 112.401 222.443 117.001L222.434 117.863C222.339 122.171 221.445 126.426 219.794 130.411C218.034 134.662 215.447 138.521 212.186 141.767L212.187 141.768L141.981 211.969C138.736 215.231 134.875 217.816 130.624 219.577C126.374 221.336 121.817 222.235 117.217 222.223L117.218 222.228C112.616 222.24 108.057 221.339 103.805 219.578C99.5538 217.817 95.6928 215.23 92.4469 211.968V211.967L57.766 177.285H69.4897L69.6079 176.952L111.879 57.39L112.114 56.723H81.2506L81.1324 57.0561L43.6253 163.144L22.2502 141.768V141.767C18.9891 138.521 16.4029 134.662 14.6427 130.411C12.8824 126.16 11.9819 121.602 11.9942 117.001C11.9823 112.401 12.8828 107.844 14.6427 103.593C16.4031 99.3423 18.9895 95.4815 22.2511 92.236L92.445 22.0353C95.6906 18.7736 99.5511 16.1881 103.802 14.4278C108.053 12.6678 112.611 11.7678 117.212 11.7804H117.214ZM116.997 0C123.146 -0.0170432 129.239 1.1865 134.92 3.54006C140.601 5.89353 145.758 9.35068 150.094 13.711L193.106 56.723H186.142L146.615 17.1925L146.614 17.1915C142.735 13.2906 138.121 10.1973 133.038 8.09185C127.955 5.98639 122.504 4.91059 117.003 4.92581H117C111.498 4.91085 106.048 5.98646 100.966 8.09185C95.8827 10.1974 91.2678 13.2905 87.3883 17.1915L17.1915 87.3883C13.2904 91.2677 10.1974 95.8827 8.09185 100.966C5.98644 106.048 4.91065 111.498 4.92581 117V117.003C4.90993 122.504 5.98512 127.954 8.0899 133.037C10.1947 138.12 13.2872 142.735 17.1876 146.614L17.1886 146.615L41.0374 170.462L39.219 175.607L13.7042 150.098C9.34573 145.761 5.89034 140.603 3.53811 134.922C1.18582 129.241 -0.0170437 123.149 0 117C-0.0157974 110.852 1.18781 104.761 3.54104 99.0817C5.74756 93.7562 8.92432 88.8909 12.9054 84.731L13.712 83.9078L83.9058 13.711C88.2413 9.35133 93.3986 5.89448 99.0788 3.54104C104.759 1.18781 110.849 -0.0149063 116.997 0.000976569V0Z"/></g></svg>
     </div>
   </section>
 
-  <section id="share" aria-labelledby="share-title">
-    <div class="wrap">
-      <h2 id="share-title">Share one service with one person, and take it back.</h2>
-      <p>swoosh is Theia's command-line program. You pick a service on your machine and a person. They get that one service, not your machine or your network.</p>
-      <p>The share ends on a date you pick, or sooner when you revoke it. Taking one person back leaves everyone else alone.</p>
-      <p>Your machine decides who gets in on its own; it asks no server.</p>
+  <!-- The idea -->
+  <section id="idea" class="section" aria-labelledby="idea-title">
+    <div class="container">
+      <h2 id="idea-title" class="eyebrow"><span aria-hidden="true">//</span> The idea</h2>
+      <p class="manifesto">Most ways to reach your own machines start with an account on someone else's server, and that server decides who gets in. Theia starts from the key.</p>
 
-      <figure class="term">
-        <figcaption>On your machine:</figcaption>
-        <pre><code>swoosh serve photos=tcp:localhost:&lt;port&gt;
-swoosh share photos &lt;friend&gt; --expires 7d
-captured at release</code></pre>
-      </figure>
-
-      <figure class="term">
-        <figcaption>On your friend's machine:</figcaption>
-        <pre><code>swoosh forward &lt;link&gt; photos 8080
-captured at release</code></pre>
-      </figure>
-
-      <figure class="term">
-        <figcaption>Take it back:</figcaption>
-        <pre><code>swoosh revoke &lt;link&gt;
-swoosh forward &lt;link&gt; photos 8080
-captured at release</code></pre>
-      </figure>
-
-      <figure class="term">
-        <figcaption>A session that is open when you revoke ends then:</figcaption>
-        <pre><code>swoosh share ssh &lt;friend&gt;
-swoosh ssh &lt;link&gt;
-captured at release</code></pre>
-      </figure>
-
-      <figure class="term">
-        <figcaption>Three people, one taken back:</figcaption>
-        <pre><code>captured at release</code></pre>
-      </figure>
-
-      <p>A service anyone may use can be shared to <code>anyone</code>. A shell is shared only with a person.</p>
-
-      <figure class="term">
-        <pre><code>swoosh share web anyone --expires 1d
-captured at release</code></pre>
-      </figure>
-
+      <ol class="principles">
+        <li class="principle">
+          <span class="principle__num" aria-hidden="true">01</span>
+          <h3>Nothing to sign up for, nothing to take away.</h3>
+          <p>Your key lives on your machine. There is no account, so there is nothing for a company to suspend, delete or deplatform.</p>
+        </li>
+        <li class="principle">
+          <span class="principle__num" aria-hidden="true">02</span>
+          <h3>Your machine decides who gets in.</h3>
+          <p>Every connection proves the key it comes from. Your machine checks that key against what you granted, on the spot, and asks no server.</p>
+        </li>
+        <li class="principle">
+          <span class="principle__num" aria-hidden="true">03</span>
+          <h3>Access is given, and taken back.</h3>
+          <p>You give one service, not your whole machine or network. It ends on the date you set, or sooner when you revoke it, and everyone else keeps theirs.</p>
+        </li>
+        <li class="principle">
+          <span class="principle__num" aria-hidden="true">04</span>
+          <h3>The only operator is you.</h3>
+          <p>Machines connect directly, or through a relay that cannot read the traffic or let anyone in. The default relays and address lookup are <a href="https://n0.computer">n0's</a>, so n0 sees which machines talk to each other.<span data-pending-run> You can run both.</span></p>
+        </li>
+      </ol>
     </div>
   </section>
 
-  <section id="serve" aria-labelledby="serve-title">
-    <div class="wrap">
-      <h2 id="serve-title">Your machine serves what you name, behind one gate.</h2>
-      <p>A machine serves only what you list: a shell, a folder that takes files, a local port or socket, a website fetched through it, and two diagnostics, <code>ping</code> and <code>speed</code>. Your own machines and the people you share with get in. Everyone else is refused.</p>
+  <!-- Where we're going -->
+  <section id="vision" class="section band" aria-labelledby="vision-title">
+    <div class="container">
+      <div class="vision">
+        <header class="vision__intro">
+          <p class="eyebrow"><span aria-hidden="true">//</span> Where we're going</p>
+          <h2 id="vision-title" class="vision__statement">We want anyone to run their own network: their machines, their family and their work, each reached by key, with every decision about who gets in made on their own machines.</h2>
 
-      <figure class="term">
-        <pre><code>swoosh serve ssh ping speed drop=recv:~/Drop web=tcp:localhost:3000 proxy:https://example.com
-captured at release</code></pre>
-      </figure>
+          <dl class="legend" aria-label="Status">
+            <div><dt><span class="tag" data-status="today">Today</span></dt><dd>in the current release.</dd></div>
+            <div><dt><span class="tag" data-status="building">Building</span></dt><dd>being built now.</dd></div>
+            <div><dt><span class="tag" data-status="designed">Designed</span></dt><dd>worked out, not yet built.</dd></div>
+            <div><dt><span class="tag" data-status="coming">Coming</span></dt><dd>on the list, not yet designed.</dd></div>
+          </dl>
+        </header>
 
-      <figure class="term">
-        <figcaption>From another of your machines (<a href="#machines">below</a>), each service is one command:</figcaption>
-        <pre><code>swoosh ping me/&lt;name&gt;
-swoosh ssh me/&lt;name&gt; -- echo hello
-swoosh send &lt;file&gt; me/&lt;name&gt;
-swoosh forward me/&lt;name&gt; web 8080
-swoosh proxy me/&lt;name&gt; https://example.com/
-swoosh speed me/&lt;name&gt;
-captured at release</code></pre>
-      </figure>
+        <ol class="route">
+          <li class="chapter" data-status="today">
+            <p class="chapter__meta"><span class="chapter__num">01</span><span class="tag" data-status="today">Today</span></p>
+            <h3 class="chapter__name">Your machines, as one.</h3>
+            <p class="chapter__hook">Every machine you own answers to one key.</p>
+            <p class="chapter__scene">A new laptop joins with one invite and reaches everything your other machines serve: a shell with no ssh keys to copy, a folder that takes files, any local port. Lose it, and you revoke it on each machine it reached.</p>
+          </li>
 
-      <figure class="term">
-        <figcaption>A machine that was not let in:</figcaption>
-        <pre><code>swoosh ping &lt;key&gt;
-captured at release</code></pre>
-      </figure>
+          <li class="chapter" data-status="today">
+            <p class="chapter__meta"><span class="chapter__num">02</span><span class="tag" data-status="today">Today</span></p>
+            <h3 class="chapter__name">One service, one person, until a date.</h3>
+            <p class="chapter__hook">Give a friend one thing on your machine, not your machine.</p>
+            <p class="chapter__scene">Let a friend into the photo library on your home server until Sunday. Take it back on Thursday, and their next connection is refused; a session they had open closes within about a second. The same link in a stranger's hands opens nothing.</p>
+          </li>
+
+          <li class="chapter" data-status="designed">
+            <p class="chapter__meta"><span class="chapter__num">03</span><span class="tag" data-status="designed">Designed</span></p>
+            <h3 class="chapter__name">Any network, or none.</h3>
+            <p class="chapter__hook">A route through family, or over Bluetooth with no internet at all.</p>
+            <p class="chapter__scene">Your sister's laptop on a café network will reach your desktop at home through your mum's machine, because your mum will let family pass through her machine. When the power and the internet are out, two laptops in the same room will still reach each other by key over Bluetooth.</p>
+          </li>
+
+          <li class="chapter" data-status="designed">
+            <p class="chapter__meta"><span class="chapter__num">04</span><span class="tag" data-status="designed">Designed</span></p>
+            <h3 class="chapter__name">Your family, granted once.</h3>
+            <p class="chapter__hook">Access for people, not machines, with every device they own included.</p>
+            <p class="chapter__scene">You will make a group of your mum, your dad, your brother and your sister, and give it the family photo server in one line. Every machine you own will honour it, and each of them will get in from any of their devices.</p>
+          </li>
+
+          <li class="chapter" data-status="coming">
+            <p class="chapter__meta"><span class="chapter__num">05</span><span class="tag" data-status="coming">Coming</span></p>
+            <h3 class="chapter__name">Mail at your key.</h3>
+            <p class="chapter__hook">An email address made of your key, at any gateway, delivered to your own machine.</p>
+            <p class="specimen"><span class="specimen__label">Address</span><code>bf01i6u56y6gdf4a74w7vy4vebtc6gqbktmqe3ljxdoha2jlfc4zdhba@gateway.example</code></p>
+            <p class="chapter__scene">Anyone will write to it from an ordinary mail client. The part before the @ is your key, so any gateway will carry it, one you run or one you trust. Change gateways, and the mail will still land on your machine. The gateway will see each message as it arrives, as any mail server does, then seal it to your key. If your machine is off, another machine of yours will hold it sealed until you are back.</p>
+          </li>
+
+          <li class="chapter" data-status="coming">
+            <p class="chapter__meta"><span class="chapter__num">06</span><span class="tag" data-status="coming">Coming</span></p>
+            <h3 class="chapter__name">Drives.</h3>
+            <p class="chapter__hook">Your files in any browser, stored wherever you choose.</p>
+            <p class="chapter__scene">Your photos will live on your own disk, in storage you pay for, or on your brother's server across town. Anything that leaves your machine will be encrypted first. You will open them from any browser by key, and give a friend one folder for a week the same way you give a service.</p>
+          </li>
+
+          <li class="chapter" data-status="designed">
+            <p class="chapter__meta"><span class="chapter__num">07</span><span class="tag" data-status="designed">Designed</span></p>
+            <h3 class="chapter__name">Try it in your browser.</h3>
+            <p class="chapter__hook">Theia inside a browser tab, with nothing installed.</p>
+            <p class="chapter__scene">A link will open a tab that is itself a Theia machine. The link will carry a one-time invite, and the tab will open the file or the shell it was given: your own machine's shell, on a borrowed laptop. Closing the tab will leave nothing behind.</p>
+          </li>
+        </ol>
+      </div>
+
+      <details class="plan" open>
+        <summary class="plan__summary">
+          <h3 class="plan__title">The rest of the plan</h3>
+          <span class="plan__count" aria-hidden="true">22</span>
+        </summary>
+        <div class="plan__groups">
+          <div class="plan__col">
+          <section class="plan__group" aria-label="Today">
+            <p class="plan__head"><span class="tag" data-status="today">Today</span></p>
+            <ul>
+              <li data-status="today"><strong>Fix your mum's computer from anywhere.</strong> Set her machine up once on a visit; after that it answers to your key, and you reach its shell whenever it breaks, with no remote-desktop account.</li>
+              <li data-status="today"><strong>A key you can lock.</strong> Seal your key under a passphrase, back it up to a USB stick, and restore it on a new machine.</li>
+            </ul>
+          </section>
+          <section class="plan__group" aria-label="Building">
+            <p class="plan__head"><span class="tag" data-status="building">Building</span></p>
+            <ul>
+              <li data-status="building"><strong>Touch ID.</strong> On a Mac, your key will open with a touch.</li>
+              <li data-status="building"><strong>Names on every device.</strong> Save a contact once, and every machine you own will know it.</li>
+              <li data-status="building"><strong>CI runners you reach by key.</strong> Step into a failing build's runner by key, for the life of the job.</li>
+              <li data-status="building"><strong>A machine that sleeps until you call it.</strong> A machine on GitHub that will start when you call it, let you in by key, and shut down when its time is up.</li>
+            </ul>
+          </section>
+          <section class="plan__group" aria-label="Designed">
+            <p class="plan__head"><span class="tag" data-status="designed">Designed</span></p>
+            <ul>
+              <li data-status="designed"><strong>A machine to try it on.</strong> A machine we run, open to anyone, will answer your first command the minute you install.</li>
+              <li data-status="designed"><strong>Work and home, kept apart.</strong> One key for both, with nothing crossing between them; when you leave, work will revoke you once, everywhere.</li>
+              <li data-status="designed"><strong>Recovery, when a key is lost.</strong> Ten words, written down once, will move you to a new key, and the people who saved your key will follow you to it.</li>
+              <li data-status="designed"><strong>When the network is blocked.</strong> Your machines will reach a blocked relay and lookup through a Tor client you run, and nothing else changes.</li>
+              <li data-status="designed"><strong>VPN mode and exits.</strong> Reach your home server's web apps by address, and send your traffic out through a friend's machine.</li>
+              <li data-status="designed"><strong>Build on the same parts.</strong> Your own service will get the same grants and revocation, with no access checks to write.</li>
+            </ul>
+          </section>
+          </div>
+          <div class="plan__col">
+          <section class="plan__group" aria-label="Coming">
+            <p class="plan__head"><span class="tag" data-status="coming">Coming</span></p>
+            <ul>
+              <li data-status="coming"><strong>A protocol, not only a program.</strong> Every format written down, so a stranger's program built from the specs will reach yours.</li>
+              <li data-status="coming"><strong>Send to someone who is away.</strong> A file sent to your sister while her laptop is shut will wait, sealed, on one of her own machines.</li>
+              <li data-status="coming"><strong>Documents, kept in step.</strong> A notes file you and your sister both edit, shared and taken back like everything else.</li>
+              <li data-status="coming"><strong>For people with nothing installed.</strong> A plain link that will open in a browser or in the ssh they already have, and a public web address for one service.</li>
+              <li data-status="coming"><strong>Names in any app.</strong> Type <code>desk.alice</code> into ssh or a browser; a web domain you own will point to your key.</li>
+              <li data-status="coming"><strong>Apps on every platform.</strong> A desktop app, and Theia on Windows, Android and iPhone.</li>
+              <li data-status="coming"><strong>Agents.</strong> Give an AI agent one tool for an hour, with a budget, and end it sooner if you like.</li>
+              <li data-status="coming"><strong>Run code at a key.</strong> Sandboxed code that will wake when someone with a grant calls, and cost nothing in between.</li>
+              <li data-status="coming"><strong>A market of exits.</strong> Exits anyone can offer, and anyone can pick.</li>
+              <li data-status="coming"><strong>And more.</strong> Hardware security keys as locks. Access your family will receive if you die. Which of your machines are online, at a glance. A file from your phone to your laptop with one tap. Webhooks reachable only by the right sender.</li>
+            </ul>
+          </section>
+          </div>
+        </div>
+      </details>
     </div>
   </section>
 
-  <section id="machines" aria-labelledby="machines-title">
-    <div class="wrap">
-      <h2 id="machines-title">Your machines are one group.</h2>
-      <p>Add a machine with <code>swoosh invite</code> on one of yours and <code>swoosh join</code> on the new one. Each machine you add is <code>me/&lt;name&gt;</code>, and it reaches what your other machines serve.</p>
+  <!-- Where we are today -->
+  <section id="today" class="section" aria-labelledby="today-title">
+    <div class="container">
+      <header class="section-head">
+        <p class="eyebrow"><span aria-hidden="true">//</span> Where we are today</p>
+        <h2 id="today-title">swoosh is the program you install, for Linux and macOS.</h2>
+      </header>
 
-      <figure class="term">
-        <pre><code>swoosh join
-swoosh invite &lt;name&gt; &lt;key&gt;
-swoosh status
-captured at release</code></pre>
-      </figure>
+      <div class="demos">
+        <input class="demos__radio" type="radio" name="demo" id="demo-1" checked>
+        <input class="demos__radio" type="radio" name="demo" id="demo-2">
+        <input class="demos__radio" type="radio" name="demo" id="demo-3">
+        <input class="demos__radio" type="radio" name="demo" id="demo-4">
+
+        <div class="demos__steps">
+          <label class="step" for="demo-1"><span class="step__num">01</span><span class="step__title">Reach a machine, then name it.</span><span class="step__text">One machine serves; another reaches it by its key, then by a name.</span></label>
+          <label class="step" for="demo-2"><span class="step__num">02</span><span class="step__title">Add your own laptop.</span><span class="step__text">Your second machine joins with one invite, then opens a shell with no ssh keys to copy.</span></label>
+          <label class="step" for="demo-3"><span class="step__num">03</span><span class="step__title">Share one service, then revoke it.</span><span class="step__text">A stranger is refused. A link opens one service for fifteen minutes; revoked, it opens nothing.</span></label>
+          <label class="step" for="demo-4"><span class="step__num">04</span><span class="step__title">Share with every device a friend owns.</span><span class="step__text">One service for every device a friend owns. The same link in a stranger's hands is refused.</span></label>
+        </div>
+
+        <figure class="term demos__term">
+          <div class="term__bar" aria-hidden="true"><span class="term__dots"></span></div>
+          <div class="demos__panels">
+            <pre class="term__body demo-panel" id="panel-1"><code><span class="t-in"><span class="t-ps"><span class="t-host">[desk]</span> $</span> swoosh serve --public ping,speed --expires 5m</span>
+<span class="t-out">swoosh ready</span>
+
+<span class="t-out">    bf01i6u56y6gdf4a74w7vy4vebtc6gqbktmqe3ljxdoha2jlfc4zdhba</span>
+
+<span class="t-out">how peers reach you</span>
+<span class="t-out">  internet   automatic; peers reach you by the key above, even across NATs</span>
+<span class="t-out">  records    n0's public discovery: your addresses, for anyone with your key</span>
+<span class="t-out">  local      automatic; your devices just need the key (mDNS), announced at:</span>
+<span class="t-out">             192.168.x.x:53122</span>
+
+<span class="t-out">serving</span>
+<span class="t-out">  family-gated   your devices + peers you've granted</span>
+<span class="t-out">    control.*   node control (never public)</span>
+<span class="t-out">  public !   anyone, unauthenticated</span>
+<span class="t-out">    ping    round-trip probe</span>
+<span class="t-out">    speed   throughput test</span>
+
+<span class="t-out">runs for 5m, then stops (or ctrl-c)</span>
+
+<span class="t-in"><span class="t-ps"><span class="t-host">[visitor]</span> $</span> swoosh ping bf01i6u56y6gdf4a74w7vy4vebtc6gqbktmqe3ljxdoha2jlfc4zdhba -c 4</span>
+<span class="t-out">bf01i6u56y6gdf4a via iroh: mixed (direct to 192.168.x.x:53122 and relayed)</span>
+<span class="t-out">  4 sent, 4 received, 0% loss</span>
+<span class="t-out">  rtt min/avg/max/mdev = 0.527/0.580/0.610/0.027 ms</span>
+
+<span class="t-in"><span class="t-ps"><span class="t-host">[visitor]</span> $</span> swoosh contact add desk bf01i6u56y6gdf4a74w7vy4vebtc6gqbktmqe3ljxdoha2jlfc4zdhba</span>
+<span class="t-out">added desk -&gt; bf01i6u56y6gdf4a</span>
+
+<span class="t-in"><span class="t-ps"><span class="t-host">[visitor]</span> $</span> swoosh ping desk -c 4</span>
+<span class="t-out">desk/default via iroh: mixed (direct to 192.168.x.x:53122 and relayed)</span>
+<span class="t-out">  4 sent, 4 received, 0% loss</span>
+<span class="t-out">  rtt min/avg/max/mdev = 0.443/0.693/1.204/0.255 ms</span></code></pre>
+            <pre class="term__body demo-panel" id="panel-2"><code><span class="t-in"><span class="t-ps"><span class="t-host">[desk]</span> $</span> swoosh serve ping=ping: speed=speed: ssh=sshd: web=tcp:127.0.0.1:8765 inbox=recv:/tmp/site-capture/inbox --expires 10m</span>
+<span class="t-out">swoosh ready</span>
+
+<span class="t-out">    bf01i6u56y6gdf4a74w7vy4vebtc6gqbktmqe3ljxdoha2jlfc4zdhba</span>
+
+<span class="t-out">how peers reach you</span>
+<span class="t-out">  internet   automatic; peers reach you by the key above, even across NATs</span>
+<span class="t-out">  records    n0's public discovery: your addresses, for anyone with your key</span>
+<span class="t-out">  local      automatic; your devices just need the key (mDNS), announced at:</span>
+<span class="t-out">             192.168.x.x:52689</span>
+
+<span class="t-out">serving</span>
+<span class="t-out">  family-gated   your devices + peers you've granted</span>
+<span class="t-out">    inbox -&gt; recv               receives pushed files</span>
+<span class="t-out">    ping                        round-trip probe</span>
+<span class="t-out">    speed                       throughput test</span>
+<span class="t-out">    ssh -&gt; sshd                 a shell on this machine</span>
+<span class="t-out">    web -&gt; tcp:127.0.0.1:8765   local TCP service</span>
+<span class="t-out">    control.*                   node control (never public)</span>
+
+<span class="t-out">runs for 10m, then stops (or ctrl-c)</span>
+
+<span class="t-in"><span class="t-ps"><span class="t-host">[desk]</span> $</span> swoosh invite add laptop</span>
+<span class="t-out">invite:jjtuqm6ktduci2gs<span class="t-cut">...(787 chars, cut)</span></span>
+
+<span class="t-out">recorded me/laptop -&gt; bf01yntaf6dbwq3dfoewddbaoh47l4kcxao57hkemkgddohahintxilq  [derived]</span>
+<span class="t-out">hand this invite to the machine (a SECRET: adopting it becomes this identity and trusts your signet).</span>
+
+<span class="t-in"><span class="t-ps"><span class="t-host">[laptop]</span> $</span> swoosh adopt @invite.txt</span>
+<span class="t-out">adopted this machine as bf01yntaf6dbwq3dfoewddbaoh47l4kcxao57hkemkgddohahintxilq  [mine]</span>
+<span class="t-out">trusting signet bf01i6u56y6gdf4a74w7vy4vebtc6gqbktmqe3ljxdoha2jlfc4zdhba: `swoosh serve` now admits its members and delegates.</span>
+<span class="t-out"><span class="t-cut">...(1 line cut)</span></span>
+<span class="t-out">stored your membership badge: this device now reaches your gated services.</span>
+
+<span class="t-in"><span class="t-ps"><span class="t-host">[laptop]</span> $</span> swoosh contact add desk bf01i6u56y6gdf4a74w7vy4vebtc6gqbktmqe3ljxdoha2jlfc4zdhba</span>
+<span class="t-out">added desk -&gt; bf01i6u56y6gdf4a</span>
+
+<span class="t-in"><span class="t-ps"><span class="t-host">[laptop]</span> $</span> swoosh ssh desk -- 'uname -sm; whoami; pwd'</span>
+<span class="t-out">swoosh: pinning bf01i6u56y6gdf4a74w7vy4vebtc6gqbktmqe3ljxdoha2jlfc4zdhba on first connection (over the authenticated overlay)</span>
+<span class="t-out">Warning: Permanently added 'bf01i6u56y6gdf4a74w7vy4vebtc6gqbktmqe3ljxdoha2jlfc4zdhba' (ED25519) to the list of known hosts.</span>
+<span class="t-out">Darwin arm64</span>
+<span class="t-out">miraclx</span>
+<span class="t-out">/tmp/site-capture</span></code></pre>
+            <pre class="term__body demo-panel" id="panel-3"><code><span class="t-in"><span class="t-ps"><span class="t-host">[stranger]</span> $</span> swoosh contact add desk bf01i6u56y6gdf4a74w7vy4vebtc6gqbktmqe3ljxdoha2jlfc4zdhba</span>
+<span class="t-out">added desk -&gt; bf01i6u56y6gdf4a</span>
+
+<span class="t-in"><span class="t-ps"><span class="t-host">[stranger]</span> $</span> swoosh ping desk -c 3</span>
+<span class="t-out">desk/default via iroh: reached, but refused (not admitted: no member badge or capability for this service was accepted)</span>
+<span class="t-out">Error: desk: reached, but refused</span>
+
+<span class="t-in"><span class="t-ps"><span class="t-host">[desk]</span> $</span> swoosh grant issue ping --expires 15m</span>
+<span class="t-out">issued a bearer grant for `ping`</span>
+<span class="t-out">  anyone holding the link can use it; expires in 15m.</span>
+<span class="t-out">  revoke: paste the link to `swoosh grant revoke &lt;link&gt;`, or let it expire</span>
+<span class="t-out">sheer:bf01i6u56y6gdf4a<span class="t-cut">...(545 chars, cut)</span></span>
+
+<span class="t-in"><span class="t-ps"><span class="t-host">[stranger]</span> $</span> swoosh ping sheer:bf01i6u56y6gdf4a<span class="t-cut">...(545 chars, cut)</span> -c 3</span>
+<span class="t-out">bf01i6u56y6gdf4a via iroh: mixed (direct to 192.168.x.x:52689 and relayed)</span>
+<span class="t-out">  3 sent, 3 received, 0% loss</span>
+<span class="t-out">  rtt min/avg/max/mdev = 0.362/1.425/3.461/1.357 ms</span>
+
+<span class="t-in"><span class="t-ps"><span class="t-host">[desk]</span> $</span> swoosh grant revoke sheer:bf01i6u56y6gdf4a<span class="t-cut">...(545 chars, cut)</span></span>
+<span class="t-out">revoked link (/tmp/site-capture/homes/desk/revoked)</span>
+
+<span class="t-in"><span class="t-ps"><span class="t-host">[stranger]</span> $</span> swoosh ping sheer:bf01i6u56y6gdf4a<span class="t-cut">...(545 chars, cut)</span> -c 3</span>
+<span class="t-out">bf01i6u56y6gdf4a via iroh: reached, but refused (not admitted: no member badge or capability for this service was accepted)</span>
+<span class="t-out">Error: bf01i6u56y6gdf4a: reached, but refused</span></code></pre>
+            <pre class="term__body demo-panel" id="panel-4"><code><span class="t-in"><span class="t-ps"><span class="t-host">[desk]</span> $</span> swoosh contact signet friend bf01lofwt27me6gdkbrrb6ktggggqbgwwku3n6zsef3gwo342ejtnkia</span>
+<span class="t-out">recorded friend's signet -&gt; bf01lofwt27me6gd</span>
+
+<span class="t-in"><span class="t-ps"><span class="t-host">[desk]</span> $</span> swoosh grant issue ping --for fleet:friend --expires 1h</span>
+<span class="t-out">issued a fleet-bound grant for `ping` to fleet signet bf01lofwt27me6gdkbrrb6ktggggqbgwwku3n6zsef3gwo342ejtnkia</span>
+<span class="t-out">  every device that signet vouches for can use it (theft-resistant); expires in 1h</span>
+<span class="t-out">  revoke: swoosh grant revoke bf01lofwt27me6gdkbrrb6ktggggqbgwwku3n6zsef3gwo342ejtnkia</span>
+<span class="t-out">sheer:bf01i6u56y6gdf4a<span class="t-cut">...(761 chars, cut)</span></span>
+
+<span class="t-in"><span class="t-ps"><span class="t-host">[friend]</span> $</span> swoosh contact add desk bf01i6u56y6gdf4a74w7vy4vebtc6gqbktmqe3ljxdoha2jlfc4zdhba</span>
+<span class="t-out">added desk -&gt; bf01i6u56y6gdf4a</span>
+
+<span class="t-in"><span class="t-ps"><span class="t-host">[friend]</span> $</span> swoosh ping desk --present sheer:bf01i6u56y6gdf4a<span class="t-cut">...(761 chars, cut)</span> -c 3</span>
+<span class="t-out">desk/default via iroh: mixed (direct to 192.168.x.x:52689 and relayed)</span>
+<span class="t-out">  3 sent, 3 received, 0% loss</span>
+<span class="t-out">  rtt min/avg/max/mdev = 0.457/0.665/0.795/0.139 ms</span>
+
+<span class="t-in"><span class="t-ps"><span class="t-host">[friendphone]</span> $</span> swoosh contact add desk bf01i6u56y6gdf4a74w7vy4vebtc6gqbktmqe3ljxdoha2jlfc4zdhba</span>
+<span class="t-out">added desk -&gt; bf01i6u56y6gdf4a</span>
+
+<span class="t-in"><span class="t-ps"><span class="t-host">[friendphone]</span> $</span> swoosh ping desk --present sheer:bf01i6u56y6gdf4a<span class="t-cut">...(761 chars, cut)</span> -c 3</span>
+<span class="t-out">desk/default via iroh: mixed (direct to [2001:db8::x]:62021 and relayed)</span>
+<span class="t-out">  3 sent, 3 received, 0% loss</span>
+<span class="t-out">  rtt min/avg/max/mdev = 0.579/0.885/1.239/0.236 ms</span>
+
+<span class="t-in"><span class="t-ps"><span class="t-host">[stranger]</span> $</span> swoosh ping desk --present sheer:bf01i6u56y6gdf4a<span class="t-cut">...(761 chars, cut)</span> -c 3</span>
+<span class="t-out">desk/default via iroh: reached, but refused (not admitted: no member badge or capability for this service was accepted)</span>
+<span class="t-out">Error: desk: reached, but refused</span></code></pre>
+          </div>
+        </figure>
+      </div>
+
+      <div class="works">
+        <h3 class="works__title">What works today</h3>
+        <ul class="works__list">
+          <li>Across NATs: <code>ping</code>, <code>speed</code>, <code>ssh</code>, <code>send</code>, <code>reach</code>, <code>fetch</code>.</li>
+          <li>Everything you <code>serve</code> is gated: your devices and the people you grant get in; <code>--public</code> opens it to anyone.</li>
+          <li>Add your own machines with <code>invite add</code> and <code>adopt</code>.</li>
+          <li>Share one service until a date with <code>grant issue</code>.</li>
+          <li><code>grant revoke</code> takes it back; open sessions close within about a second.</li>
+          <li>Seal, back up and restore your key: <code>identity protect</code>, <code>export</code>, <code>restore</code>.</li>
+        </ul>
+      </div>
     </div>
   </section>
 
-  <section id="reach" aria-labelledby="reach-title">
-    <div class="wrap">
-      <h2 id="reach-title">swoosh finds a machine across routers and NATs.</h2>
-      <p>Every machine has a key. You name a machine by its key, or by a name you gave it. swoosh connects directly when it can. When no direct path exists, a relay passes the encrypted bytes; it cannot read them or let anyone in.</p>
+  <!-- The libraries -->
+  <section id="libraries" class="section section--raised" aria-labelledby="libraries-title">
+    <div class="container">
+      <header class="section-head">
+        <p class="eyebrow"><span aria-hidden="true">//</span> The libraries</p>
+        <h2 id="libraries-title">swoosh is the program; the rest are the libraries it is built from.</h2>
+        <p class="lede">Each library does one job and works on its own, in your own Rust program.</p>
+      </header>
+
+      <ul class="repos">
+        <li class="repo repo--program">
+          <a href="https://github.com/theia-hq/swoosh">
+            <span class="repo__name">swoosh</span>
+            <span class="repo__line">Reaches a machine by its public key instead of its IP address: ping it, measure the link, ssh in, send files, reach the services it serves, and share access.</span>
+          </a>
+        </li>
+        <li class="repo">
+          <a href="https://github.com/theia-hq/bifrost">
+            <span class="repo__name">bifrost</span>
+            <span class="repo__line">Opens a byte stream to a machine by its public key, wherever it is on the internet, across NATs, without knowing its address.</span>
+          </a>
+        </li>
+        <li class="repo">
+          <a href="https://github.com/theia-hq/nauthy">
+            <span class="repo__name">nauthy</span>
+            <span class="repo__line">Capability tokens you can narrow, hand on and revoke with no server, rooted at one ed25519 key you hold and checked offline.</span>
+          </a>
+        </li>
+        <li class="repo">
+          <a href="https://github.com/theia-hq/tightbeam">
+            <span class="repo__name">tightbeam</span>
+            <span class="repo__line">Serves named services behind one gate at a public key; a peer that passes the gate gets a byte stream to the one service it asked for.</span>
+          </a>
+        </li>
+        <li class="repo">
+          <a href="https://github.com/theia-hq/services">
+            <span class="repo__name">services</span>
+            <span class="repo__line">Service engines that each do one job for a caller already let in: fetch a web page, measure a link, serve a shell, transfer files.</span>
+          </a>
+        </li>
+        <li class="repo">
+          <a href="https://github.com/theia-hq/keystore">
+            <span class="repo__name">keystore</span>
+            <span class="repo__line">Keeps one ed25519 secret key in one file, plain or sealed under a passphrase or a Mac's Touch ID.</span>
+          </a>
+        </li>
+        <li class="repo">
+          <a href="https://github.com/theia-hq/quirk">
+            <span class="repo__name">quirk</span>
+            <span class="repo__line">A QUIC-style transport over UDP, written from scratch to learn how one works. It does not speak standard QUIC.</span>
+          </a>
+        </li>
+      </ul>
     </div>
   </section>
 
-  <section id="family" aria-labelledby="family-title">
-    <div class="wrap">
-      <h2 id="family-title">One program, built from libraries that each do one job.</h2>
-      <p>Each library has its own repository and works without swoosh.</p>
-      <dl class="family">
-        <div class="family__item">
-          <dt><a href="https://github.com/theia-hq/swoosh">swoosh</a></dt>
-          <dd>The program you install; it uses every library below.</dd>
-        </div>
-        <div class="family__item">
-          <dt><a href="https://github.com/theia-hq/bifrost">bifrost</a></dt>
-          <dd>"Open a byte-stream to a machine identified by its public key, wherever it is on the internet, across NATs, without knowing its address." In swoosh, it dials the key.</dd>
-        </div>
-        <div class="family__item">
-          <dt><a href="https://github.com/theia-hq/nauthy">nauthy</a></dt>
-          <dd>"Capability tokens you can revoke with no server, rooted at one ed25519 key you hold." In swoosh, it decides who gets in.</dd>
-        </div>
-        <div class="family__item">
-          <dt><a href="https://github.com/theia-hq/tightbeam">tightbeam</a></dt>
-          <dd>"A node serves named services behind one gate, addressed by its public key." In swoosh, it puts each service you name behind that gate.</dd>
-        </div>
-        <div class="family__item">
-          <dt><a href="https://github.com/theia-hq/services">services</a></dt>
-          <dd>"The general service engines: fetch, measure, sshh, and transfer." In swoosh, they are the website fetch, <code>ping</code> and <code>speed</code>, the shell, and the file drop.</dd>
-        </div>
-        <div class="family__item">
-          <dt><a href="https://github.com/theia-hq/keystore">keystore</a></dt>
-          <dd>"keystore stores one ed25519 secret key in one file, plain or sealed." In swoosh, it keeps each key on disk, locked with a passphrase or Touch ID.</dd>
-        </div>
-        <div class="family__item">
-          <dt><a href="https://github.com/theia-hq/quirk">quirk</a></dt>
-          <dd>"A QUIC-style transport over UDP, written from scratch." In swoosh, a second transport, written to learn how one works. It is not the default.</dd>
-        </div>
-      </dl>
-    </div>
-  </section>
-
-  <section id="builders" aria-labelledby="builders-title">
-    <div class="wrap">
-      <h2 id="builders-title">Use the libraries in your own Rust program.</h2>
-      <p>Each library is a Rust crate you take from git. Its README shows the API and an example.</p>
-      <pre class="code"><code>cargo add bifrost bifrost-iroh --git https://github.com/theia-hq/bifrost
-cargo add nauthy --git https://github.com/theia-hq/nauthy --branch main
-cargo add keystore --git https://github.com/theia-hq/keystore</code></pre>
-    </div>
-  </section>
-
-
-  <section id="install" aria-labelledby="install-title">
-    <div class="wrap">
-      <h2 id="install-title">Install swoosh</h2>
-      <pre class="code"><code>curl -fsSL https://raw.githubusercontent.com/theia-hq/swoosh/main/scripts/install.sh | sh</code></pre>
-      <p class="meta">Prebuilt for x86_64 and aarch64 Linux and Apple Silicon macOS. The script checks the download's SHA-256 checksum before it installs.</p>
-
-      <p>Then try it against our test machine, which answers <code>ping</code> and nothing else:</p>
-      <figure class="term">
-        <pre><code>swoosh ping &lt;our key&gt;
-captured at release</code></pre>
-      </figure>
-
-      <p>Experimental and pre-1.0. Keys, links and the files a machine keeps can change between releases; each release note says when to start fresh.</p>
+  <!-- Install -->
+  <section id="install" class="section install" aria-labelledby="install-title">
+    <div class="container install__inner">
+      <h2 id="install-title" class="eyebrow"><span aria-hidden="true">//</span> Install</h2>
+      <div class="cmd" data-copy>
+        <pre><code><span class="t-ps" aria-hidden="true">$ </span><span class="cmd__text">curl -fsSL https://raw.githubusercontent.com/theia-hq/swoosh/main/scripts/install.sh | sh</span></code></pre>
+      </div>
+      <p class="install__meta">Prebuilt for x86_64 and aarch64 Linux and Apple Silicon macOS; the script checks the download's checksum before it installs.</p>
     </div>
   </section>
 
 </main>
 
 <footer class="site-footer">
-  <div class="wrap site-footer__inner">
-    <picture class="site-footer__mark">
-      <source srcset="assets/icon-white.svg" media="(prefers-color-scheme: dark)">
-      <img src="assets/icon.svg" alt="" width="234" height="235">
-    </picture>
-    <p>MIT OR Apache-2.0</p>
-    <p><a href="https://github.com/theia-hq">github.com/theia-hq</a></p>
+  <div class="container site-footer__inner">
+    <a class="site-footer__mark" href="./" aria-label="Theia home">
+      <picture>
+        <source srcset="assets/icon-white.svg" media="(prefers-color-scheme: dark)">
+        <img src="assets/icon.svg" alt="" width="234" height="235">
+      </picture>
+    </a>
+    <p>MIT OR Apache-2.0 <span class="site-footer__sep" aria-hidden="true">·</span> <a href="https://github.com/theia-hq">GitHub</a></p>
   </div>
 </footer>
+
+<script>
+  // A copy button on the install line. Without JavaScript the line is still plain, selectable text.
+  document.querySelectorAll("[data-copy]").forEach(function (box) {
+    if (!navigator.clipboard) return;
+    var text = box.querySelector(".cmd__text").textContent;
+    var button = document.createElement("button");
+    button.type = "button";
+    button.className = "cmd__copy";
+    button.textContent = "Copy";
+    button.addEventListener("click", function () {
+      navigator.clipboard.writeText(text).then(function () {
+        button.textContent = "Copied";
+        setTimeout(function () { button.textContent = "Copy"; }, 1600);
+      });
+    });
+    box.appendChild(button);
+  });
+
+  // On a phone the long plan list starts folded. Without JavaScript it stays open.
+  if (window.matchMedia("(max-width: 40rem)").matches) {
+    document.querySelectorAll("details.plan").forEach(function (d) { d.open = false; });
+  }
+</script>
 
 </body>
 </html>

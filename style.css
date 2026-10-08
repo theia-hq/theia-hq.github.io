@@ -1,46 +1,118 @@
 /*
- * The org page. Monochrome to match the mark: black, white, and the brand greys #333333, #4F4F4F, #8D8D8D.
- * System fonts only: nothing on this page is loaded from anyone else (org-site.md, "No third-party requests").
+ * Theia. Monochrome, like the mark: black, white and greys.
+ * Fonts are served from this site; the page makes no request to anyone else.
+ * Roboto Slab (the wordmark's face) sets display type, Inter sets text, JetBrains Mono sets code.
  */
 
-/* Palette. #8D8D8D is about 3.3:1 on white, under AA for body text, so light mode keeps it to rules and
-   small meta; #4F4F4F carries secondary text. The hairline and code-surface greys are not brand greys:
-   they are the lightest tones that still read as a line or a panel. */
+@font-face {
+  font-family: "Roboto Slab";
+  src: url("assets/fonts/roboto-slab.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("assets/fonts/inter.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("assets/fonts/jetbrains-mono.woff2") format("woff2");
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- Tokens ---------- */
+
 :root {
   color-scheme: light dark;
 
   --bg: #ffffff;
+  --bg-raised: #f6f6f5;
   --fg: #000000;
-  --text: #333333;
+  --text: #2e2e2e;
   --text-2: #4f4f4f;
   --muted: #8d8d8d;
-  --rule: #e6e6e6;
-  --surface: #f6f6f6;
-  --surface-rule: #e6e6e6;
+  --rule: #e7e7e7;
+  --rule-2: #d2d2d2;
 
-  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --serif: ui-serif, "Iowan Old Style", "Charter", Georgia, Cambria, "Times New Roman", serif;
-  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  /* Terminals stay dark in both schemes. */
+  --term-bg: #0c0c0c;
+  --term-bar: #141414;
+  --term-rule: #262626;
+  --term-cmd: #f5f5f5;
+  --term-out: #a3a3a3;
+  --term-host: #8a8a8a;
+  --term-dim: #5c5c5c;
 
-  /* One column, narrow enough to read in one pass; the 16px gutter holds at phone width. */
-  --measure: 44rem;
-  --gutter: 16px;
+  --slab: "Roboto Slab", ui-serif, Georgia, serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+  --gutter: clamp(16px, 4vw, 40px);
+  --wide: 74rem;
+  --measure: 38rem;
+  --header-h: 4.25rem;
+  --radius: 10px;
 }
 
-/* Dark mirrors the palette: on black, #8D8D8D clears AA (about 6.3:1), so it carries secondary text here.
-   Body text is a step off pure white so long passages do not glare. */
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #000000;
+    --bg-raised: #0b0b0b;
     --fg: #ffffff;
-    --text: #e6e6e6;
-    --text-2: #8d8d8d;
-    --muted: #8d8d8d;
-    --rule: #333333;
-    --surface: #111111;
-    --surface-rule: #333333;
+    --text: #dedede;
+    --text-2: #9d9d9d;
+    --muted: #6f6f6f;
+    --rule: #1c1c1c;
+    --rule-2: #303030;
+
+    --term-bg: #0a0a0a;
+    --term-bar: #111111;
+    --term-rule: #242424;
   }
 }
+
+/* The vision band is dark in both schemes. In dark mode it lifts off the black page: a lighter ground,
+   a light rim at the top and a soft glow under it. */
+.band {
+  --bg: #050505;
+  --bg-raised: #111111;
+  --fg: #ffffff;
+  --text: #d6d6d6;
+  --text-2: #9a9a9a;
+  --muted: #6a6a6a;
+  --rule: #232323;
+  --rule-2: #3a3a3a;
+
+  background:
+    radial-gradient(ellipse 80% 420px at 50% 0, rgba(255, 255, 255, 0.07), transparent 70%),
+    var(--bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .band {
+    --bg: #101010;
+    --bg-raised: #191919;
+    --rule: #262626;
+    --rule-2: #424242;
+    --text-2: #a3a3a3;
+
+    background:
+      radial-gradient(ellipse 80% 480px at 50% 0, rgba(255, 255, 255, 0.075), transparent 70%),
+      var(--bg);
+    border-top: 1px solid #333333;
+    border-bottom: 1px solid #222222;
+  }
+}
+
+/* ---------- Base ---------- */
 
 *,
 *::before,
@@ -51,6 +123,13 @@
 html {
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--header-h) + 1rem);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
@@ -58,32 +137,71 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--sans);
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 1.0625rem;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
-  /* A long token in copy must wrap, never push the page sideways on a phone. */
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   overflow-wrap: break-word;
 }
 
-img {
+/* Inter's alternates (single-storey a, open digits) apply to text set in Inter only. */
+body,
+.button,
+.cmd__copy {
+  font-feature-settings: "cv11", "ss01";
+}
+
+h1,
+h2,
+.chapter__name,
+.plan__title,
+.manifesto,
+code,
+pre,
+.eyebrow,
+.tag,
+.principle__num,
+.chapter__num,
+.step__num,
+.specimen__label,
+.repo__name,
+.works__title {
+  font-feature-settings: normal;
+}
+
+img,
+svg {
   display: block;
   max-width: 100%;
   height: auto;
 }
 
-.wrap {
-  max-width: calc(var(--measure) + 2 * var(--gutter));
-  margin: 0 auto;
-  padding: 0 var(--gutter);
+h1,
+h2,
+h3,
+p,
+ol,
+ul,
+dl,
+dd,
+figure {
+  margin: 0;
 }
 
-/* Links: underlined and in the text color, so they read as links without a hue the palette lacks. */
+ol,
+ul {
+  padding: 0;
+  list-style: none;
+}
+
 a {
   color: var(--fg);
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
-  text-decoration-color: var(--muted);
+  text-underline-offset: 0.22em;
+  text-decoration-color: var(--rule-2);
+  transition: text-decoration-color 120ms ease, color 120ms ease, border-color 120ms ease, background-color 120ms ease;
 }
 
 a:hover {
@@ -93,65 +211,135 @@ a:hover {
 :focus-visible {
   outline: 2px solid var(--fg);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
-/* Headings in a serif, set against sans body text; Roboto Slab would go here only if self-hosted. */
+code {
+  font-family: var(--mono);
+  font-size: 0.875em;
+}
+
+/* Captured output is shown as printed: no ligatures (so "->" stays two characters). */
+code,
+pre {
+  font-variant-ligatures: none;
+}
+
+.container {
+  width: 100%;
+  max-width: calc(var(--wide) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.skip {
+  position: absolute;
+  left: var(--gutter);
+  top: -3rem;
+  z-index: 20;
+  padding: 0.5rem 0.875rem;
+  background: var(--fg);
+  color: var(--bg);
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.skip:focus {
+  top: 0.75rem;
+}
+
+/* ---------- Type roles ---------- */
+
 h1,
 h2 {
-  font-family: var(--serif);
+  font-family: var(--slab);
+  font-weight: 400;
   color: var(--fg);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1.15;
   text-wrap: balance;
 }
 
-h1 {
-  font-size: clamp(2.25rem, 1.6rem + 3vw, 3.5rem);
-  margin: 0 0 1.25rem;
-}
-
 h2 {
-  font-size: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);
-  margin: 0 0 1rem;
+  font-size: clamp(1.75rem, 1.2rem + 2.2vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
-p {
-  margin: 0 0 1rem;
+h3 {
+  color: var(--fg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
 }
 
-/* Header: the wordmark and three links on one line, wrapping under it on the narrowest phones. */
+.eyebrow {
+  margin-bottom: 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-2);
+}
+
+.eyebrow span {
+  color: var(--muted);
+  letter-spacing: 0;
+  margin-right: 0.35em;
+}
+
+.lede {
+  font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+  line-height: 1.6;
+  color: var(--text-2);
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+.section-head {
+  max-width: 50rem;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.section-head h2 + .lede {
+  margin-top: 1.25rem;
+}
+
+/* ---------- Header ---------- */
+
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
+  backdrop-filter: saturate(180%) blur(14px);
   border-bottom: 1px solid var(--rule);
 }
 
 .site-header__inner {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem 1.5rem;
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
+  gap: 1.5rem;
+  min-height: var(--header-h);
 }
 
 .brand {
   display: block;
+  flex: none;
   text-decoration: none;
 }
 
 .brand img {
-  height: 28px;
+  height: 26px;
   width: auto;
 }
 
 .nav {
   display: flex;
-  gap: 1.5rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
+  align-items: center;
+  gap: clamp(1rem, 2.5vw, 2rem);
   font-size: 0.9375rem;
 }
 
@@ -164,36 +352,130 @@ p {
   color: var(--fg);
 }
 
-/* Hero: the H1 and the subline own the first screen; nothing decorates them. */
-.hero {
-  padding: clamp(3.5rem, 10vw, 7rem) 0 clamp(3rem, 8vw, 5rem);
+.nav .nav__gh {
+  padding: 0.375rem 0.875rem;
+  border: 1px solid var(--rule-2);
+  border-radius: 999px;
+  color: var(--fg);
 }
 
-.lede {
-  font-size: clamp(1.125rem, 1.05rem + 0.4vw, 1.3125rem);
+.nav .nav__gh:hover {
+  border-color: var(--fg);
+}
+
+/* On a phone the links take a second row under the wordmark, and the header scrolls away. */
+@media (max-width: 40rem) {
+  :root {
+    --header-h: 0rem;
+  }
+
+  .site-header {
+    position: static;
+  }
+
+  .site-header__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.875rem;
+    padding-block: 1.125rem 0.875rem;
+  }
+
+  .brand img {
+    height: 24px;
+  }
+
+  .site-header nav,
+  .nav {
+    width: 100%;
+  }
+
+  .nav {
+    justify-content: space-between;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+  }
+
+  .nav .nav__gh {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+  }
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(3rem, 11vw, 9rem) clamp(3.5rem, 9vw, 8rem);
+}
+
+.hero__inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+}
+
+.hero__text {
+  position: relative;
+  z-index: 1;
+  max-width: 50rem;
+}
+
+.hero h1 {
+  font-size: clamp(3rem, 1.1rem + 7vw, 7.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  margin-bottom: clamp(1.25rem, 3vw, 2.25rem);
+}
+
+.hero__lede {
+  max-width: 34rem;
+  font-size: clamp(1.125rem, 1rem + 0.55vw, 1.4375rem);
   line-height: 1.5;
   color: var(--text-2);
-  max-width: 36rem;
-  margin-bottom: 2rem;
+  text-wrap: pretty;
+  margin-bottom: clamp(1.75rem, 4vw, 2.75rem);
 }
 
-.actions {
+.hero__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin: 0;
+}
+
+.hero__orbit {
+  display: none;
+}
+
+@media (min-width: 64rem) {
+  .hero__inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 3rem;
+  }
+
+  .hero__orbit {
+    display: block;
+    width: clamp(24rem, 34vw, 32rem);
+    margin-right: calc(-1 * clamp(1rem, 3vw, 3rem));
+    color: var(--fg);
+  }
 }
 
 .button {
-  display: inline-block;
-  padding: 0.625rem 1.125rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.875rem;
+  padding: 0 1.375rem;
   border: 1px solid var(--fg);
-  border-radius: 6px;
+  border-radius: 8px;
   background: var(--fg);
   color: var(--bg);
+  font-size: 0.9375rem;
   font-weight: 500;
   text-decoration: none;
-  line-height: 1.4;
 }
 
 .button:hover {
@@ -204,7 +486,7 @@ p {
 .button--quiet {
   background: transparent;
   color: var(--fg);
-  border-color: var(--rule);
+  border-color: var(--rule-2);
 }
 
 .button--quiet:hover {
@@ -212,121 +494,836 @@ p {
   border-color: var(--fg);
 }
 
-/* Sections: one hairline between each, and room to breathe; no cards, no icons. */
-main > section:not(.hero) {
-  border-top: 1px solid var(--rule);
-  padding: clamp(2.75rem, 7vw, 4.5rem) 0;
+/* ---------- Sections ---------- */
+
+.section {
+  padding-block: clamp(4rem, 10vw, 8.5rem);
+  background: var(--bg);
+  color: var(--text);
 }
 
-/* Transcripts and code: plain text in <pre>, selectable and copyable. A long line scrolls inside its own
-   block so the page itself never scrolls sideways. */
-pre {
-  margin: 0;
-  padding: 1rem 1.125rem;
-  overflow-x: auto;
-  background: var(--surface);
-  border: 1px solid var(--surface-rule);
-  border-radius: 8px;
+.section + .section:not(.band):not(.section--raised) {
+  border-top: 1px solid var(--rule);
+}
+
+.section--raised {
+  background: var(--bg-raised);
+  border-top: 1px solid var(--rule);
+}
+
+/* ---------- The idea ---------- */
+
+.manifesto {
+  max-width: 22em;
+  font-family: var(--slab);
+  font-size: clamp(1.625rem, 1.15rem + 2.1vw, 2.875rem);
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
   color: var(--fg);
+  text-wrap: balance;
+  margin-bottom: clamp(2.75rem, 7vw, 5rem);
+}
+
+/* Principles: one row each, so a long one grows downward without unbalancing the others. */
+.principles {
+  border-top: 1px solid var(--fg);
+}
+
+.principle {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.25rem 1rem;
+  padding-block: 1.375rem 1.5rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.principle__num {
+  grid-row: span 2;
+  padding-top: 0.25rem;
   font-family: var(--mono);
-  font-size: 0.8125rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.principle h3 {
+  font-size: 1.125rem;
+  line-height: 1.4;
+}
+
+.principle p {
+  color: var(--text-2);
+  font-size: 1rem;
   line-height: 1.6;
+  max-width: 40rem;
+}
+
+@media (min-width: 56rem) {
+  .principle {
+    grid-template-columns: 2.5rem minmax(0, 4fr) minmax(0, 7fr);
+    gap: 2rem;
+    padding-block: 1.75rem;
+  }
+
+  .principle__num {
+    grid-row: auto;
+  }
+
+  .principle h3 {
+    font-size: 1.1875rem;
+  }
+}
+
+/* ---------- Vision ---------- */
+
+.vision {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(3rem, 7vw, 5rem);
+}
+
+.vision__statement {
+  font-size: clamp(1.5rem, 1.15rem + 1.1vw, 2.125rem);
+  line-height: 1.2;
+  text-wrap: pretty;
+}
+
+@media (min-width: 64rem) {
+  .vision {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(4rem, 7vw, 7rem);
+    align-items: start;
+  }
+}
+
+/* The intro stays in view beside the chapters only when the window is tall enough to show all of it. */
+@media (min-width: 64rem) and (min-height: 46rem) {
+  .vision__intro {
+    position: sticky;
+    top: calc(var(--header-h) + 3rem);
+  }
+}
+
+.legend {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 2.25rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--rule);
+}
+
+.legend > div {
+  display: grid;
+  grid-template-columns: 7.25rem minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+}
+
+.legend dd {
+  color: var(--text-2);
+  font-size: 0.9375rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 40rem) {
+  .legend > div {
+    grid-template-columns: 6.75rem minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .legend dd {
+    font-size: 0.875rem;
+  }
+}
+
+/* Status tags: told apart by fill and stroke, never by hue. */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  height: 1.625rem;
+  padding: 0 0.625rem;
+  border: 1px solid var(--rule-2);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg);
+  white-space: nowrap;
+}
+
+.tag::before,
+.plan li::before {
+  content: "";
+  flex: none;
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border: 1px solid currentColor;
+  border-radius: 1.5px;
+  transform: rotate(45deg);
+}
+
+.tag[data-status="today"] {
+  background: var(--fg);
+  border-color: var(--fg);
+  color: var(--bg);
+}
+
+.tag[data-status="today"]::before,
+.plan li[data-status="today"]::before {
+  background: currentColor;
+}
+
+.tag[data-status="building"]::before,
+.plan li[data-status="building"]::before {
+  background: linear-gradient(135deg, currentColor 50%, transparent 50%);
+}
+
+.tag[data-status="coming"] {
+  border-style: dashed;
+  color: var(--text-2);
+}
+
+.tag[data-status="coming"]::before,
+.plan li[data-status="coming"]::before {
+  border-style: dashed;
+}
+
+/* The route: one line through every chapter, solid where it exists, dashed where it is still ahead. */
+.chapter {
+  position: relative;
+  padding-left: clamp(2.25rem, 5vw, 3.5rem);
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.chapter:last-child {
+  padding-bottom: 0;
+}
+
+.chapter::before {
+  content: "";
+  position: absolute;
+  left: 0.6875rem;
+  top: 1.75rem;
+  bottom: -0.25rem;
+  border-left: 1px solid var(--rule-2);
+}
+
+.chapter:last-child::before {
+  display: none;
+}
+
+.chapter[data-status="designed"]::before,
+.chapter[data-status="coming"]::before {
+  border-left-style: dashed;
+}
+
+.chapter::after {
+  content: "";
+  position: absolute;
+  left: 0.3125rem;
+  top: 0.3125rem;
+  width: 0.8125rem;
+  height: 0.8125rem;
+  border: 1.5px solid var(--fg);
+  border-radius: 2.5px;
+  background: var(--bg);
+  transform: rotate(45deg);
+}
+
+.chapter[data-status="today"]::after {
+  background: var(--fg);
+}
+
+.chapter[data-status="building"]::after {
+  background: linear-gradient(135deg, var(--fg) 50%, var(--bg) 50%);
+}
+
+.chapter[data-status="coming"]::after {
+  border-style: dashed;
+  border-color: var(--text-2);
+}
+
+.chapter__meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.chapter__num {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.chapter__name {
+  font-family: var(--slab);
+  font-weight: 400;
+  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.125rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.625rem;
+}
+
+.chapter__hook {
+  color: var(--fg);
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+  max-width: 36rem;
+}
+
+.chapter__scene {
+  color: var(--text-2);
+  font-size: 1rem;
+  line-height: 1.62;
+  max-width: 36rem;
+}
+
+/* A specimen: one literal artifact that makes a chapter concrete. */
+.specimen {
+  display: grid;
+  gap: 0.375rem;
+  max-width: 36rem;
+  margin: 1rem 0 1.125rem;
+  padding: 0.875rem 1.125rem;
+  border: 1px solid var(--rule-2);
+  border-radius: var(--radius);
+  background: var(--bg-raised);
+}
+
+.specimen__label {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.specimen code {
+  min-width: 0;
+  color: var(--fg);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+/* The rest of the plan: one line per item, grouped by status, in two columns where there is room. */
+.plan {
+  margin-top: clamp(3.5rem, 8vw, 6rem);
+  border-top: 1px solid var(--rule-2);
+}
+
+.plan__summary {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding-block: 1.5rem;
+  list-style: none;
+  cursor: pointer;
+}
+
+.plan__summary::-webkit-details-marker {
+  display: none;
+}
+
+.plan__title {
+  font-family: var(--slab);
+  font-size: clamp(1.375rem, 1.15rem + 0.9vw, 1.875rem);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+}
+
+.plan__count {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.75rem;
+  height: 1.5rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--rule-2);
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--text-2);
+}
+
+.plan__summary::after {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-left: auto;
+  border-right: 1.5px solid var(--text-2);
+  border-bottom: 1.5px solid var(--text-2);
+  transform: translateY(-0.15rem) rotate(45deg);
+  transition: transform 150ms ease;
+}
+
+.plan[open] .plan__summary::after {
+  transform: translateY(0.15rem) rotate(-135deg);
+}
+
+.plan__groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr));
+  gap: 0 clamp(2.5rem, 5vw, 4.5rem);
+  padding-top: 0.5rem;
+}
+
+.plan__group {
+  margin-bottom: 1.75rem;
+}
+
+.plan__head {
+  margin-bottom: 0.375rem;
+}
+
+.plan li {
+  position: relative;
+  padding: 0.5rem 0 0.5rem 1.25rem;
+  border-bottom: 1px solid var(--rule);
+  color: var(--text-2);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.plan li:last-child {
+  border-bottom: 0;
+}
+
+/* The status mark sits on the first line; the bold name and its line read as one run of text. */
+.plan li::before {
+  position: absolute;
+  left: 0.125rem;
+  top: 0.95rem;
+  color: var(--fg);
+}
+
+.plan li[data-status="coming"]::before {
+  color: var(--text-2);
+}
+
+.plan li strong {
+  color: var(--fg);
+  font-weight: 600;
+}
+
+/* ---------- Today ---------- */
+
+/* Four steps above one terminal: picking a step shows its capture. Plain radio buttons drive it, so it
+   needs no script. */
+.demos {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.demos__radio {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.demos__steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 0.625rem;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.25rem 0.75rem;
+  padding: 1rem 1.125rem 1.125rem;
+  border: 1px solid var(--rule-2);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 120ms ease, background-color 120ms ease;
+}
+
+.step:hover {
+  border-color: var(--text-2);
+}
+
+.step__num {
+  grid-row: span 2;
+  padding-top: 0.2rem;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.step__title {
+  color: var(--fg);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+}
+
+.step__text {
+  color: var(--text-2);
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+#demo-1:checked ~ .demos__steps [for="demo-1"],
+#demo-2:checked ~ .demos__steps [for="demo-2"],
+#demo-3:checked ~ .demos__steps [for="demo-3"],
+#demo-4:checked ~ .demos__steps [for="demo-4"] {
+  border-color: var(--fg);
+  box-shadow: inset 0 0 0 1px var(--fg);
+}
+
+#demo-1:focus-visible ~ .demos__steps [for="demo-1"],
+#demo-2:focus-visible ~ .demos__steps [for="demo-2"],
+#demo-3:focus-visible ~ .demos__steps [for="demo-3"],
+#demo-4:focus-visible ~ .demos__steps [for="demo-4"] {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+}
+
+.demo-panel {
+  display: none;
+}
+
+#demo-1:checked ~ .demos__term #panel-1,
+#demo-2:checked ~ .demos__term #panel-2,
+#demo-3:checked ~ .demos__term #panel-3,
+#demo-4:checked ~ .demos__term #panel-4 {
+  display: block;
+}
+
+/* Terminal windows. The prompt is dim, the command bright, the output a step dimmer, and a cut is marked. */
+.term {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--term-rule);
+  border-radius: var(--radius);
+  background: var(--term-bg);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 28px 56px -28px rgba(0, 0, 0, 0.4);
+}
+
+.term__bar {
+  display: flex;
+  align-items: center;
+  height: 2.25rem;
+  padding: 0 0.875rem;
+  background: var(--term-bar);
+  border-bottom: 1px solid var(--term-rule);
+}
+
+.term__dots {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin-right: 28px;
+  border-radius: 50%;
+  background: #2f2f2f;
+  box-shadow: 14px 0 0 #2f2f2f, 28px 0 0 #2f2f2f;
+}
+
+.term__body {
+  margin: 0;
+  padding: 1.25rem 1.375rem 1.5rem;
+  overflow-x: auto;
+  font-family: var(--mono);
+  font-size: 0.78125rem;
+  line-height: 1.7;
+  color: var(--term-out);
   tab-size: 4;
   -webkit-overflow-scrolling: touch;
 }
 
-pre code {
+.term__body code {
   font: inherit;
   white-space: pre;
 }
 
-code {
-  font-family: var(--mono);
-  font-size: 0.875em;
-}
-
-/* Inline code in copy may hold a key or a URL; let it break rather than overflow. */
-p code {
-  overflow-wrap: anywhere;
-}
-
-pre.code {
-  margin: 1.5rem 0 1rem;
-}
-
-.term {
-  margin: 1.75rem 0 0;
-}
-
-.term figcaption {
-  margin-bottom: 0.5rem;
-  color: var(--text-2);
-  font-size: 0.875rem;
-}
-
-.meta {
-  color: var(--text-2);
-  font-size: 0.875rem;
-}
-
-/* The limit: set apart by a rule on the left, not by color, so it reads as a plain statement of fact. */
-.note {
-  border-left: 2px solid var(--fg);
-  padding: 0.25rem 0 0.25rem 1.25rem;
-}
-
-.note p:last-child {
-  margin-bottom: 0;
-}
-
-/* The family: a definition list, one row per repo; two columns once there is room for them. */
-.family {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
-  margin: 1.75rem 0 0;
-  border-top: 1px solid var(--rule);
-}
-
-.family__item {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.25rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--rule);
-}
-
-.family dt {
-  font-family: var(--mono);
-  font-size: 0.9375rem;
-  font-weight: 600;
-}
-
-.family dt a {
-  text-decoration: none;
-}
-
-.family dt a:hover {
-  text-decoration: underline;
-}
-
-.family dd {
-  margin: 0;
-  color: var(--text-2);
-}
-
-@media (min-width: 40rem) {
-  .family__item {
-    grid-template-columns: 8.5rem 1fr;
-    gap: 1.5rem;
-    align-items: baseline;
+@media (min-width: 64rem) {
+  .term__body code {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
   }
 }
 
-/* Footer: small, quiet, the mark once more. */
+.t-in {
+  color: var(--term-cmd);
+}
+
+.t-ps {
+  color: var(--term-dim);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.t-host {
+  color: var(--term-host);
+}
+
+.t-out {
+  color: var(--term-out);
+}
+
+.t-cut {
+  color: var(--term-dim);
+  font-style: italic;
+}
+
+.works {
+  margin-top: clamp(3rem, 7vw, 5rem);
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
+}
+
+.works__title {
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-2);
+  margin-bottom: 1.25rem;
+}
+
+.works__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr));
+  gap: 0.75rem 2.5rem;
+}
+
+.works__list li {
+  position: relative;
+  padding-left: 1.375rem;
+  color: var(--text);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+.works__list li::before {
+  content: "";
+  position: absolute;
+  left: 0.125rem;
+  top: 0.55em;
+  width: 0.4375rem;
+  height: 0.4375rem;
+  background: var(--fg);
+  border-radius: 1.5px;
+  transform: rotate(45deg);
+}
+
+.works code,
+.plan code {
+  color: var(--fg);
+}
+
+/* ---------- Libraries ---------- */
+
+.repos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  gap: 1rem;
+}
+
+.repo a {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  height: 100%;
+  padding: 1.375rem 3rem 1.5rem 1.375rem;
+  border: 1px solid var(--rule-2);
+  border-radius: var(--radius);
+  background: var(--bg);
+  text-decoration: none;
+}
+
+.repo a::after {
+  content: "\2197";
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  font-size: 0.9375rem;
+  color: var(--muted);
+  transition: color 120ms ease, transform 120ms ease;
+}
+
+.repo a:hover {
+  border-color: var(--fg);
+}
+
+.repo a:hover::after {
+  color: var(--fg);
+  transform: translate(2px, -2px);
+}
+
+.repo__name {
+  font-family: var(--mono);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.repo__line {
+  color: var(--text-2);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+/* swoosh, the program, spans the row and carries a heavier rule. */
+.repo--program {
+  grid-column: 1 / -1;
+}
+
+.repo--program a {
+  padding: 1.75rem 3rem 1.875rem 1.75rem;
+  border: 1.5px solid var(--fg);
+}
+
+.repo--program .repo__name {
+  font-size: clamp(1.375rem, 1.15rem + 0.8vw, 1.75rem);
+}
+
+.repo--program .repo__line {
+  max-width: 44rem;
+  color: var(--text);
+  font-size: 1.0625rem;
+}
+
+.repo--program a::after {
+  top: 1.625rem;
+  right: 1.625rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .repo--program a {
+    border-color: #6a6a6a;
+    background: #0d0d0d;
+  }
+
+  .repo--program a:hover {
+    border-color: var(--fg);
+  }
+}
+
+@media (max-width: 40rem) {
+  .repos {
+    gap: 0.625rem;
+  }
+
+  .repo a {
+    padding: 1.125rem 2.75rem 1.25rem 1.125rem;
+  }
+
+  .repo a::after {
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .repo--program a {
+    padding: 1.375rem 2.75rem 1.5rem 1.25rem;
+  }
+}
+
+/* ---------- Install ---------- */
+
+.install__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.cmd {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  border: 1px solid var(--term-rule);
+  border-radius: var(--radius);
+  background: var(--term-bg);
+  text-align: left;
+}
+
+.cmd pre {
+  margin: 0;
+  padding: 1.125rem 1.375rem;
+  font-family: var(--mono);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--term-cmd);
+  overflow-x: auto;
+}
+
+.cmd code {
+  font: inherit;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* With the copy button, the line keeps room for it on the right. */
+.cmd:has(.cmd__copy) pre {
+  padding-right: 5.75rem;
+}
+
+.cmd__copy {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  transform: translateY(-50%);
+  min-width: 4.5rem;
+  height: 2.125rem;
+  padding: 0 0.75rem;
+  border: 1px solid var(--term-rule);
+  border-radius: 7px;
+  background: var(--term-bar);
+  color: var(--term-cmd);
+  font-family: var(--sans);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.cmd__copy:hover {
+  border-color: #4a4a4a;
+}
+
+@media (min-width: 56rem) {
+  .cmd code {
+    white-space: pre;
+    overflow-wrap: normal;
+  }
+}
+
+/* On narrow screens the command wraps, and the copy button sits under it. */
+@media (max-width: 55.99rem) {
+  .cmd pre,
+  .cmd:has(.cmd__copy) pre {
+    padding: 1rem 1.125rem;
+    font-size: 0.8125rem;
+  }
+
+  .cmd__copy {
+    position: static;
+    display: block;
+    transform: none;
+    margin: -0.25rem 0.75rem 0.75rem auto;
+  }
+}
+
+.install__meta {
+  max-width: 34rem;
+  margin-top: 1.25rem;
+  color: var(--text-2);
+  font-size: 0.9375rem;
+  text-wrap: balance;
+}
+
+/* ---------- Footer ---------- */
+
 .site-footer {
   border-top: 1px solid var(--rule);
-  padding: 2.5rem 0 3rem;
+  padding-block: 2.25rem 2.75rem;
   color: var(--text-2);
   font-size: 0.875rem;
 }
@@ -335,23 +1332,199 @@ pre.code {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem 1.5rem;
+  gap: 0.75rem 1.75rem;
 }
 
-.site-footer__inner p {
-  margin: 0;
+.site-footer__mark {
+  margin-right: auto;
 }
 
 .site-footer__mark img {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
 }
 
 .site-footer a {
   color: var(--text-2);
 }
 
-/* 404: one line and a way home, centered in the first screen. */
+.site-footer__sep {
+  margin-inline: 0.5rem;
+  color: var(--muted);
+}
+
+.site-footer a:hover {
+  color: var(--fg);
+}
+
+/* ---------- Phone ---------- */
+
+/* On a phone the same content, set tighter, so the page stays a short read. */
+@media (max-width: 40rem) {
+  .section {
+    padding-block: 3.25rem;
+  }
+
+  .manifesto {
+    margin-bottom: 2rem;
+  }
+
+  .principle {
+    padding-block: 1rem 1.125rem;
+  }
+
+  .principle h3 {
+    font-size: 1rem;
+  }
+
+  .principle p {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .vision {
+    gap: 2.5rem;
+  }
+
+  .legend {
+    margin-top: 1.5rem;
+    padding-top: 1.25rem;
+    gap: 0.5rem;
+  }
+
+  .chapter {
+    padding-left: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  .chapter__meta {
+    margin-bottom: 0.625rem;
+  }
+
+  .chapter__name {
+    font-size: 1.375rem;
+    margin-bottom: 0.375rem;
+  }
+
+  .chapter__hook {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .chapter__scene {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+
+  .plan {
+    margin-top: 2.5rem;
+  }
+
+  .plan__summary {
+    padding-block: 1.125rem;
+  }
+
+  .plan li {
+    font-size: 0.875rem;
+  }
+
+  .section-head {
+    margin-bottom: 1.75rem;
+  }
+
+  .demos {
+    gap: 1rem;
+  }
+
+  .demos__steps {
+    gap: 0.5rem;
+  }
+
+  .step {
+    padding: 0.75rem 0.875rem 0.875rem;
+  }
+
+  .step__title {
+    font-size: 0.875rem;
+  }
+
+  .step__text {
+    display: none;
+    font-size: 0.8125rem;
+  }
+
+  /* Only the chosen step shows its line; the others fold to their titles. */
+  #demo-1:checked ~ .demos__steps [for="demo-1"] .step__text,
+  #demo-2:checked ~ .demos__steps [for="demo-2"] .step__text,
+  #demo-3:checked ~ .demos__steps [for="demo-3"] .step__text,
+  #demo-4:checked ~ .demos__steps [for="demo-4"] .step__text {
+    display: block;
+  }
+
+  .step__num {
+    grid-row: auto;
+    padding-top: 0.15rem;
+  }
+
+  .step__text {
+    grid-column: 2;
+  }
+
+  .term__body {
+    padding: 1rem 1rem 1.125rem;
+    font-size: 0.6875rem;
+    line-height: 1.6;
+  }
+
+  .works {
+    margin-top: 2.25rem;
+    padding-top: 1.5rem;
+  }
+
+  .works__list li {
+    font-size: 0.875rem;
+  }
+
+  /* Libraries become a ruled list; swoosh keeps its box. */
+  .repos {
+    gap: 0;
+  }
+
+  .repo:not(.repo--program) a {
+    padding: 0.875rem 2rem 0.875rem 0;
+    border: 0;
+    border-bottom: 1px solid var(--rule);
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .repo:not(.repo--program) a::after {
+    top: 0.875rem;
+    right: 0.125rem;
+  }
+
+  .repo--program {
+    margin-bottom: 0.5rem;
+  }
+
+  .repo__line {
+    font-size: 0.875rem;
+  }
+
+  .repo--program .repo__line {
+    font-size: 0.9375rem;
+  }
+}
+
+/* ---------- 404 ---------- */
+
+/* The 404 reuses the hero, sized to fill the first screen. */
 .notfound {
-  padding: clamp(4rem, 14vw, 9rem) 0;
+  display: flex;
+  align-items: center;
+  min-height: calc(100svh - var(--header-h) - 7.5rem);
+}
+
+.notfound h1 {
+  font-size: clamp(2.75rem, 1.2rem + 5vw, 5.5rem);
 }
