@@ -1,0 +1,357 @@
+/*
+ * The org page. Monochrome to match the mark: black, white, and the brand greys #333333, #4F4F4F, #8D8D8D.
+ * System fonts only: nothing on this page is loaded from anyone else (org-site.md, "No third-party requests").
+ */
+
+/* Palette. #8D8D8D is about 3.3:1 on white, under AA for body text, so light mode keeps it to rules and
+   small meta; #4F4F4F carries secondary text. The hairline and code-surface greys are not brand greys:
+   they are the lightest tones that still read as a line or a panel. */
+:root {
+  color-scheme: light dark;
+
+  --bg: #ffffff;
+  --fg: #000000;
+  --text: #333333;
+  --text-2: #4f4f4f;
+  --muted: #8d8d8d;
+  --rule: #e6e6e6;
+  --surface: #f6f6f6;
+  --surface-rule: #e6e6e6;
+
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --serif: ui-serif, "Iowan Old Style", "Charter", Georgia, Cambria, "Times New Roman", serif;
+  --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* One column, narrow enough to read in one pass; the 16px gutter holds at phone width. */
+  --measure: 44rem;
+  --gutter: 16px;
+}
+
+/* Dark mirrors the palette: on black, #8D8D8D clears AA (about 6.3:1), so it carries secondary text here.
+   Body text is a step off pure white so long passages do not glare. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #000000;
+    --fg: #ffffff;
+    --text: #e6e6e6;
+    --text-2: #8d8d8d;
+    --muted: #8d8d8d;
+    --rule: #333333;
+    --surface: #111111;
+    --surface-rule: #333333;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  /* A long token in copy must wrap, never push the page sideways on a phone. */
+  overflow-wrap: break-word;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.wrap {
+  max-width: calc(var(--measure) + 2 * var(--gutter));
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* Links: underlined and in the text color, so they read as links without a hue the palette lacks. */
+a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--muted);
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+:focus-visible {
+  outline: 2px solid var(--fg);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Headings in a serif, set against sans body text; Roboto Slab would go here only if self-hosted. */
+h1,
+h2 {
+  font-family: var(--serif);
+  color: var(--fg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(2.25rem, 1.6rem + 3vw, 3.5rem);
+  margin: 0 0 1.25rem;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);
+  margin: 0 0 1rem;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+/* Header: the wordmark and three links on one line, wrapping under it on the narrowest phones. */
+.site-header {
+  border-bottom: 1px solid var(--rule);
+}
+
+.site-header__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+.brand {
+  display: block;
+  text-decoration: none;
+}
+
+.brand img {
+  height: 28px;
+  width: auto;
+}
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.9375rem;
+}
+
+.nav a {
+  color: var(--text-2);
+  text-decoration: none;
+}
+
+.nav a:hover {
+  color: var(--fg);
+}
+
+/* Hero: the H1 and the subline own the first screen; nothing decorates them. */
+.hero {
+  padding: clamp(3.5rem, 10vw, 7rem) 0 clamp(3rem, 8vw, 5rem);
+}
+
+.lede {
+  font-size: clamp(1.125rem, 1.05rem + 0.4vw, 1.3125rem);
+  line-height: 1.5;
+  color: var(--text-2);
+  max-width: 36rem;
+  margin-bottom: 2rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.button {
+  display: inline-block;
+  padding: 0.625rem 1.125rem;
+  border: 1px solid var(--fg);
+  border-radius: 6px;
+  background: var(--fg);
+  color: var(--bg);
+  font-weight: 500;
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.button:hover {
+  background: var(--text);
+  border-color: var(--text);
+}
+
+.button--quiet {
+  background: transparent;
+  color: var(--fg);
+  border-color: var(--rule);
+}
+
+.button--quiet:hover {
+  background: transparent;
+  border-color: var(--fg);
+}
+
+/* Sections: one hairline between each, and room to breathe; no cards, no icons. */
+main > section:not(.hero) {
+  border-top: 1px solid var(--rule);
+  padding: clamp(2.75rem, 7vw, 4.5rem) 0;
+}
+
+/* Transcripts and code: plain text in <pre>, selectable and copyable. A long line scrolls inside its own
+   block so the page itself never scrolls sideways. */
+pre {
+  margin: 0;
+  padding: 1rem 1.125rem;
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--surface-rule);
+  border-radius: 8px;
+  color: var(--fg);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  tab-size: 4;
+  -webkit-overflow-scrolling: touch;
+}
+
+pre code {
+  font: inherit;
+  white-space: pre;
+}
+
+code {
+  font-family: var(--mono);
+  font-size: 0.875em;
+}
+
+/* Inline code in copy may hold a key or a URL; let it break rather than overflow. */
+p code {
+  overflow-wrap: anywhere;
+}
+
+pre.code {
+  margin: 1.5rem 0 1rem;
+}
+
+.term {
+  margin: 1.75rem 0 0;
+}
+
+.term figcaption {
+  margin-bottom: 0.5rem;
+  color: var(--text-2);
+  font-size: 0.875rem;
+}
+
+.meta {
+  color: var(--text-2);
+  font-size: 0.875rem;
+}
+
+/* The limit: set apart by a rule on the left, not by color, so it reads as a plain statement of fact. */
+.note {
+  border-left: 2px solid var(--fg);
+  padding: 0.25rem 0 0.25rem 1.25rem;
+}
+
+.note p:last-child {
+  margin-bottom: 0;
+}
+
+/* The family: a definition list, one row per repo; two columns once there is room for them. */
+.family {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 1.75rem 0 0;
+  border-top: 1px solid var(--rule);
+}
+
+.family__item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.25rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.family dt {
+  font-family: var(--mono);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.family dt a {
+  text-decoration: none;
+}
+
+.family dt a:hover {
+  text-decoration: underline;
+}
+
+.family dd {
+  margin: 0;
+  color: var(--text-2);
+}
+
+@media (min-width: 40rem) {
+  .family__item {
+    grid-template-columns: 8.5rem 1fr;
+    gap: 1.5rem;
+    align-items: baseline;
+  }
+}
+
+/* Footer: small, quiet, the mark once more. */
+.site-footer {
+  border-top: 1px solid var(--rule);
+  padding: 2.5rem 0 3rem;
+  color: var(--text-2);
+  font-size: 0.875rem;
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.5rem;
+}
+
+.site-footer__inner p {
+  margin: 0;
+}
+
+.site-footer__mark img {
+  width: 24px;
+  height: 24px;
+}
+
+.site-footer a {
+  color: var(--text-2);
+}
+
+/* 404: one line and a way home, centered in the first screen. */
+.notfound {
+  padding: clamp(4rem, 14vw, 9rem) 0;
+}

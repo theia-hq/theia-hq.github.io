@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000">
+
+  <title>Theia: you are your key</title>
+  <meta name="description" content="Share one service on your machine with one person until a date you pick, and take it back. No account for either of you.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Theia">
+  <meta property="og:description" content="Share one service on your machine with one person until a date you pick, and take it back. No account for either of you.">
+
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap site-header__inner">
+    <a class="brand" href="./">
+      <picture>
+        <source srcset="assets/logo-white.svg" media="(prefers-color-scheme: dark)">
+        <img src="assets/logo.svg" alt="Theia" width="895" height="205">
+      </picture>
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav">
+        <li><a href="#install">Install</a></li>
+        <li><a href="https://github.com/theia-hq/swoosh/blob/main/docs/getting-started.md">Docs</a></li>
+        <li><a href="https://github.com/theia-hq">GitHub</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap">
+      <h1 id="hero-title">You are your key.</h1>
+      <p class="lede">No account for you or for them. Let a friend into the photo library on your NAS for a week; take it back sooner, and they cannot connect again.</p>
+      <p class="actions">
+        <a class="button" href="#install">Install</a>
+        <a class="button button--quiet" href="https://github.com/theia-hq/swoosh/blob/main/docs/getting-started.md">Docs</a>
+      </p>
+    </div>
+  </section>
+
+  <section id="share" aria-labelledby="share-title">
+    <div class="wrap">
+      <h2 id="share-title">Share one service with one person, and take it back.</h2>
+      <p>swoosh is Theia's command-line program. You pick a service on your machine and a person. They get that one service, not your machine or your network.</p>
+      <p>The share ends on a date you pick, or sooner when you revoke it. Taking one person back leaves everyone else alone.</p>
+      <p>Your machine decides who gets in on its own; it asks no server.</p>
+
+      <figure class="term">
+        <figcaption>On your machine:</figcaption>
+        <pre><code>swoosh serve photos=tcp:localhost:&lt;port&gt;
+swoosh share photos &lt;friend&gt; --expires 7d
+captured at release</code></pre>
+      </figure>
+
+      <figure class="term">
+        <figcaption>On your friend's machine:</figcaption>
+        <pre><code>swoosh forward &lt;link&gt; photos 8080
+captured at release</code></pre>
+      </figure>
+
+      <figure class="term">
+        <figcaption>Take it back:</figcaption>
+        <pre><code>swoosh revoke &lt;link&gt;
+swoosh forward &lt;link&gt; photos 8080
+captured at release</code></pre>
+      </figure>
+
+      <figure class="term">
+        <figcaption>A session that is open when you revoke ends then:</figcaption>
+        <pre><code>swoosh share ssh &lt;friend&gt;
+swoosh ssh &lt;link&gt;
+captured at release</code></pre>
+      </figure>
+
+      <figure class="term">
+        <figcaption>Three people, one taken back:</figcaption>
+        <pre><code>captured at release</code></pre>
+      </figure>
+
+      <p>A service anyone may use can be shared to <code>anyone</code>. A shell is shared only with a person.</p>
+
+      <figure class="term">
+        <pre><code>swoosh share web anyone --expires 1d
+captured at release</code></pre>
+      </figure>
+
+    </div>
+  </section>
+
+  <section id="serve" aria-labelledby="serve-title">
+    <div class="wrap">
+      <h2 id="serve-title">Your machine serves what you name, behind one gate.</h2>
+      <p>A machine serves only what you list: a shell, a folder that takes files, a local port or socket, a website fetched through it, and two diagnostics, <code>ping</code> and <code>speed</code>. Your own machines and the people you share with get in. Everyone else is refused.</p>
+
+      <figure class="term">
+        <pre><code>swoosh serve ssh ping speed drop=recv:~/Drop web=tcp:localhost:3000 proxy:https://example.com
+captured at release</code></pre>
+      </figure>
+
+      <figure class="term">
+        <figcaption>From another of your machines (<a href="#machines">below</a>), each service is one command:</figcaption>
+        <pre><code>swoosh ping me/&lt;name&gt;
+swoosh ssh me/&lt;name&gt; -- echo hello
+swoosh send &lt;file&gt; me/&lt;name&gt;
+swoosh forward me/&lt;name&gt; web 8080
+swoosh proxy me/&lt;name&gt; https://example.com/
+swoosh speed me/&lt;name&gt;
+captured at release</code></pre>
+      </figure>
+
+      <figure class="term">
+        <figcaption>A machine that was not let in:</figcaption>
+        <pre><code>swoosh ping &lt;key&gt;
+captured at release</code></pre>
+      </figure>
+    </div>
+  </section>
+
+  <section id="machines" aria-labelledby="machines-title">
+    <div class="wrap">
+      <h2 id="machines-title">Your machines are one group.</h2>
+      <p>Add a machine with <code>swoosh invite</code> on one of yours and <code>swoosh join</code> on the new one. Each machine you add is <code>me/&lt;name&gt;</code>, and it reaches what your other machines serve.</p>
+
+      <figure class="term">
+        <pre><code>swoosh join
+swoosh invite &lt;name&gt; &lt;key&gt;
+swoosh status
+captured at release</code></pre>
+      </figure>
+    </div>
+  </section>
+
+  <section id="reach" aria-labelledby="reach-title">
+    <div class="wrap">
+      <h2 id="reach-title">swoosh finds a machine across routers and NATs.</h2>
+      <p>Every machine has a key. You name a machine by its key, or by a name you gave it. swoosh connects directly when it can. When no direct path exists, a relay passes the encrypted bytes; it cannot read them or let anyone in.</p>
+    </div>
+  </section>
+
+  <section id="family" aria-labelledby="family-title">
+    <div class="wrap">
+      <h2 id="family-title">One program, built from libraries that each do one job.</h2>
+      <p>Each library has its own repository and works without swoosh.</p>
+      <dl class="family">
+        <div class="family__item">
+          <dt><a href="https://github.com/theia-hq/swoosh">swoosh</a></dt>
+          <dd>The program you install; it uses every library below.</dd>
+        </div>
+        <div class="family__item">
+          <dt><a href="https://github.com/theia-hq/bifrost">bifrost</a></dt>
+          <dd>"Open a byte-stream to a machine identified by its public key, wherever it is on the internet, across NATs, without knowing its address." In swoosh, it dials the key.</dd>
+        </div>
+        <div class="family__item">
+          <dt><a href="https://github.com/theia-hq/nauthy">nauthy</a></dt>
+          <dd>"Capability tokens you can revoke with no server, rooted at one ed25519 key you hold." In swoosh, it decides who gets in.</dd>
+        </div>
+        <div class="family__item">
+          <dt><a href="https://github.com/theia-hq/tightbeam">tightbeam</a></dt>
+          <dd>"A node serves named services behind one gate, addressed by its public key." In swoosh, it puts each service you name behind that gate.</dd>
+        </div>
+        <div class="family__item">
+          <dt><a href="https://github.com/theia-hq/services">services</a></dt>
+          <dd>"The general service engines: fetch, measure, sshh, and transfer." In swoosh, they are the website fetch, <code>ping</code> and <code>speed</code>, the shell, and the file drop.</dd>
+        </div>
+        <div class="family__item">
+          <dt><a href="https://github.com/theia-hq/keystore">keystore</a></dt>
+          <dd>"keystore stores one ed25519 secret key in one file, plain or sealed." In swoosh, it keeps each key on disk, locked with a passphrase or Touch ID.</dd>
+        </div>
+        <div class="family__item">
+          <dt><a href="https://github.com/theia-hq/quirk">quirk</a></dt>
+          <dd>"A QUIC-style transport over UDP, written from scratch." In swoosh, a second transport, written to learn how one works. It is not the default.</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="builders" aria-labelledby="builders-title">
+    <div class="wrap">
+      <h2 id="builders-title">Use the libraries in your own Rust program.</h2>
+      <p>Each library is a Rust crate you take from git. Its README shows the API and an example.</p>
+      <pre class="code"><code>cargo add bifrost bifrost-iroh --git https://github.com/theia-hq/bifrost
+cargo add nauthy --git https://github.com/theia-hq/nauthy --branch main
+cargo add keystore --git https://github.com/theia-hq/keystore</code></pre>
+    </div>
+  </section>
+
+
+  <section id="install" aria-labelledby="install-title">
+    <div class="wrap">
+      <h2 id="install-title">Install swoosh</h2>
+      <pre class="code"><code>curl -fsSL https://raw.githubusercontent.com/theia-hq/swoosh/main/scripts/install.sh | sh</code></pre>
+      <p class="meta">Prebuilt for x86_64 and aarch64 Linux and Apple Silicon macOS. The script checks the download's SHA-256 checksum before it installs.</p>
+
+      <p>Then try it against our test machine, which answers <code>ping</code> and nothing else:</p>
+      <figure class="term">
+        <pre><code>swoosh ping &lt;our key&gt;
+captured at release</code></pre>
+      </figure>
+
+      <p>Experimental and pre-1.0. Keys, links and the files a machine keeps can change between releases; each release note says when to start fresh.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <picture class="site-footer__mark">
+      <source srcset="assets/icon-white.svg" media="(prefers-color-scheme: dark)">
+      <img src="assets/icon.svg" alt="" width="234" height="235">
+    </picture>
+    <p>MIT OR Apache-2.0</p>
+    <p><a href="https://github.com/theia-hq">github.com/theia-hq</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
